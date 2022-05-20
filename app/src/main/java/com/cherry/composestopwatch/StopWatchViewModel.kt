@@ -11,7 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class TimerViewModel(private val savedState: SavedStateHandle) : ViewModel() {
+class StopWatchViewModel(private val savedState: SavedStateHandle) : ViewModel() {
 
     private val isRunningKey = "isRunning"
     private val secsKey = "secs"
