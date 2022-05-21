@@ -6,12 +6,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
-class StopWatchViewModel(private val savedState: SavedStateHandle) : ViewModel() {
+@HiltViewModel
+class StopWatchViewModel @Inject constructor(
+    @Named("savedState") private val savedState: SavedStateHandle
+    ) : ViewModel() {
 
     private val isRunningKey = "isRunning"
     private val secsKey = "secs"
