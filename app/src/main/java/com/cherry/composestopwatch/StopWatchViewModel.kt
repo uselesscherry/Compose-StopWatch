@@ -17,7 +17,7 @@ import javax.inject.Named
 @HiltViewModel
 class StopWatchViewModel @Inject constructor(
     @Named("savedState") private val savedState: SavedStateHandle
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val isRunningKey = "isRunning"
     private val secsKey = "secs"
@@ -42,7 +42,7 @@ class StopWatchViewModel @Inject constructor(
     fun onStart() {
         if (!isRunning) {
             isRunning = true
-            savedState.set(isRunningKey, isRunning)
+            savedState[isRunningKey] = isRunning
             onCounting()
         }
     }
@@ -57,9 +57,9 @@ class StopWatchViewModel @Inject constructor(
                     Log.i("coroutine-alive", this.toString())
 
                     secs.value++
-                    savedState.set(secsKey, secs.value)
+                    savedState[secsKey] = secs.value
                     _currentTime.value = secs.value.toFormattedTime()
-                    savedState.set(currentTimeKey, _currentTime.value)
+                    savedState[currentTimeKey] = _currentTime.value
                     delay(1000)
                 }
             }
@@ -69,19 +69,19 @@ class StopWatchViewModel @Inject constructor(
     fun onStop() {
         timerJob?.cancel()
         isRunning = false
-        savedState.set(isRunningKey, isRunning)
+        savedState[isRunningKey] = isRunning
         timerJob = null
     }
 
     fun onReset() {
         timerJob?.cancel()
         isRunning = false
-        savedState.set(isRunningKey, isRunning)
+        savedState[isRunningKey] = isRunning
         timerJob = null
         secs.value = 0
-        savedState.set(secsKey, secs.value)
+        savedState[secsKey] = secs.value
         _currentTime.value = resetTime
-        savedState.set(currentTimeKey, _currentTime.value)
+        savedState[currentTimeKey] = _currentTime.value
     }
 
     override fun onCleared() {

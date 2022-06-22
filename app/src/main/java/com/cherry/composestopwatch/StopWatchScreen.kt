@@ -1,14 +1,12 @@
 package com.cherry.composestopwatch
 
 import android.content.res.Configuration
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,8 +46,9 @@ fun StopWatchScreen(
             text = timerText,
             modifier = Modifier
                 .fillMaxHeight(0.25f),
-            fontWeight = MaterialTheme.typography.h1.fontWeight,
-            fontSize = MaterialTheme.typography.h3.fontSize
+            fontWeight = MaterialTheme.typography.headlineLarge.fontWeight,
+            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+            color = MaterialTheme.colorScheme.onBackground
         )
         BoxWithConstraints(
             Modifier
@@ -63,12 +62,9 @@ fun StopWatchScreen(
                     else Alignment.CenterStart
                 ),
                 onClick = { viewModel.onStart() },
-                shape = RoundedCornerShape(100),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xffC84B31)
-                ), border = BorderStroke(2.dp, Color.Black)
+                shape = RoundedCornerShape(100)
             ) {
-                Text(text = "Start", color = Color.Black)
+                Text(text = "Start", color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Button(
@@ -76,12 +72,9 @@ fun StopWatchScreen(
                 onClick = {
                     viewModel.onStop()
                 },
-                shape = RoundedCornerShape(100),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xffC84B31)
-                ), border = BorderStroke(2.dp, Color.Black)
+                shape = RoundedCornerShape(100)
             ) {
-                Text(text = "Stop", color = Color.Black)
+                Text(text = "Stop", color = MaterialTheme.colorScheme.onPrimary)
             }
             Button(
                 modifier = Modifier.align(
@@ -91,12 +84,9 @@ fun StopWatchScreen(
                 ),
                 onClick = {
                     viewModel.onReset()
-                }, shape = RoundedCornerShape(100),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xffC84B31)
-                ), border = BorderStroke(2.dp, Color.Black)
+                }, shape = RoundedCornerShape(100)
             ) {
-                Text(text = "Reset", color = Color.Black)
+                Text(text = "Reset", color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }
