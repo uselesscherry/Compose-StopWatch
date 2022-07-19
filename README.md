@@ -1,6 +1,6 @@
 # Compose-StopWatch
 
-##№ What I used in this project:
+### What I used in this project:
 
 - Jetpack Compose
 - Hilt DI
