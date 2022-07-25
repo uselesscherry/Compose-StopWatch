@@ -1,7 +1,14 @@
 package com.cherry.composestopwatch.di
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
-class StopWatchApplication: Application()
+
+class StopWatchApplication: Application(){
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            modules(appModule)
+        }
+    }
+}

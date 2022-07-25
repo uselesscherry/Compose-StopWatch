@@ -3,93 +3,52 @@ package com.cherry.composestopwatch
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Named
 
-@HiltViewModel
-class StopWatchViewModel @Inject constructor(
-    @Named("savedState") private val savedState: SavedStateHandle
-) : ViewModel() {
+class StopWatchViewModel : ViewModel() {
 
-    private val isRunningKey = "isRunning"
-    private val secsKey = "secs"
-    private val currentTimeKey = "currentTime"
+    private var isRunning = false
 
-    private var timerJob: Job? = null
-    private var isRunning = savedState.get<Boolean>(isRunningKey) ?: false
-
-
-    private val secs = mutableStateOf(savedState.get<Int>(secsKey) ?: 0)
+    private var secs = 0
 
     private val resetTime = "00:00:00"
 
-    private val _currentTime = mutableStateOf(savedState.get<String>(currentTimeKey) ?: resetTime)
+    private val _currentTime = mutableStateOf(resetTime)
     val currentTime: State<String> = _currentTime
 
-
-    init {
-        onCounting()
-    }
-
     fun onStart() {
-        if (!isRunning) {
-            isRunning = true
-            savedState[isRunningKey] = isRunning
-            onCounting()
-        }
-    }
-
-    private fun onCounting() {
-        timerJob = null
         if (isRunning) {
-            timerJob = viewModelScope.launch(Dispatchers.Default) {
+            return
+        }
+        isRunning = true
+        viewModelScope.launch {
+            delay(1000)
+
+            while (isRunning) {
+                Log.i("coroutine-alive", this.toString())
+
+                secs++
+                _currentTime.value = secs.toFormattedTime()
                 delay(1000)
-
-                while (isRunning) {
-                    Log.i("coroutine-alive", this.toString())
-
-                    secs.value++
-                    savedState[secsKey] = secs.value
-                    _currentTime.value = secs.value.toFormattedTime()
-                    savedState[currentTimeKey] = _currentTime.value
-                    delay(1000)
-                }
             }
         }
     }
 
+
     fun onStop() {
-        timerJob?.cancel()
         isRunning = false
-        savedState[isRunningKey] = isRunning
-        timerJob = null
     }
 
     fun onReset() {
-        timerJob?.cancel()
         isRunning = false
-        savedState[isRunningKey] = isRunning
-        timerJob = null
-        secs.value = 0
-        savedState[secsKey] = secs.value
+        secs = 0
         _currentTime.value = resetTime
-        savedState[currentTimeKey] = _currentTime.value
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        timerJob?.cancel()
-        timerJob = null
-        Log.i("onClearedVM", timerJob.toString())
-    }
 
     private fun Int.toFormattedTime(): String {
         val hours = this / 3600

@@ -3,7 +3,6 @@ package com.cherry.composestopwatch
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -38,7 +36,7 @@ fun StopWatchScreen(
         Modifier
             .fillMaxSize()
             .background(color = Color(0xff2D4263))
-            .padding(8.dp),
+        ,
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -47,10 +45,10 @@ fun StopWatchScreen(
             modifier = Modifier
                 .fillMaxHeight(0.25f),
             fontWeight = MaterialTheme.typography.headlineLarge.fontWeight,
-            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+            fontSize = MaterialTheme.typography.displayLarge.fontSize,
             color = MaterialTheme.colorScheme.onBackground
         )
-        BoxWithConstraints(
+        Box(
             Modifier
                 .fillMaxHeight(0.4f)
                 .fillMaxWidth(0.5f)
@@ -61,8 +59,7 @@ fun StopWatchScreen(
                     if (isPortrait) Alignment.TopCenter
                     else Alignment.CenterStart
                 ),
-                onClick = { viewModel.onStart() },
-                shape = RoundedCornerShape(100)
+                onClick = { viewModel.onStart() }
             ) {
                 Text(text = "Start", color = MaterialTheme.colorScheme.onPrimary)
             }
@@ -71,8 +68,7 @@ fun StopWatchScreen(
                 modifier = Modifier.align(Alignment.Center),
                 onClick = {
                     viewModel.onStop()
-                },
-                shape = RoundedCornerShape(100)
+                }
             ) {
                 Text(text = "Stop", color = MaterialTheme.colorScheme.onPrimary)
             }
@@ -84,7 +80,7 @@ fun StopWatchScreen(
                 ),
                 onClick = {
                     viewModel.onReset()
-                }, shape = RoundedCornerShape(100)
+                }
             ) {
                 Text(text = "Reset", color = MaterialTheme.colorScheme.onPrimary)
             }

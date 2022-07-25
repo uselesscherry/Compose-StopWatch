@@ -1,23 +1,11 @@
 package com.cherry.composestopwatch.di
 
-import androidx.lifecycle.SavedStateHandle
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Named
-import javax.inject.Singleton
+import com.cherry.composestopwatch.StopWatchViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-
-
-
-    @Singleton
-    @Provides
-    @Named("savedState")
-    fun provideSavedStateHandle()=SavedStateHandle()
-
+val appModule = module {
+    viewModel {
+        StopWatchViewModel()
+    }
 }
