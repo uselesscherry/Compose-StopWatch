@@ -1,5 +1,7 @@
 # Compose-StopWatch
 
+<img src="screenshots/Stopwatch_thumb.png"/>
+
 ### What I used in this project:
 
 - Jetpack Compose
