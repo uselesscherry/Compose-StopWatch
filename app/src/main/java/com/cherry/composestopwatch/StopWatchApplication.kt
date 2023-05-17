@@ -1,6 +1,7 @@
-package com.cherry.composestopwatch.di
+package com.cherry.composestopwatch
 
 import android.app.Application
+import com.cherry.composestopwatch.di.appModule
 import org.koin.core.context.startKoin
 
 
