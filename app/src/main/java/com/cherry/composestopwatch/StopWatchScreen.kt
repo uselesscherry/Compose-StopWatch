@@ -2,7 +2,12 @@ package com.cherry.composestopwatch
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,12 +23,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 
 @Composable
 fun StopWatchScreen(
-    viewModel: StopWatchViewModel
+    currentTime: String,
+    onStart: () -> Unit,
+    onStop: () -> Unit,
+    onReset: () -> Unit
 ) {
-
-    val timerText by remember {
-        viewModel.currentTime
-    }
 
 
     val config = LocalConfiguration.current
@@ -35,15 +39,12 @@ fun StopWatchScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = Color(0xff2D4263))
-        ,
+            .background(color = Color(0xff2D4263)),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = timerText,
-            modifier = Modifier
-                .fillMaxHeight(0.25f),
+            text = currentTime,
             fontWeight = MaterialTheme.typography.headlineLarge.fontWeight,
             fontSize = MaterialTheme.typography.displayLarge.fontSize,
             color = MaterialTheme.colorScheme.onBackground
@@ -59,28 +60,23 @@ fun StopWatchScreen(
                     if (isPortrait) Alignment.TopCenter
                     else Alignment.CenterStart
                 ),
-                onClick = { viewModel.onStart() }
+                onClick = onStart
             ) {
                 Text(text = "Start", color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Button(
                 modifier = Modifier.align(Alignment.Center),
-                onClick = {
-                    viewModel.onStop()
-                }
+                onClick = onStop
             ) {
                 Text(text = "Stop", color = MaterialTheme.colorScheme.onPrimary)
             }
             Button(
                 modifier = Modifier.align(
-
                     if (isPortrait) Alignment.BottomCenter
                     else Alignment.CenterEnd
                 ),
-                onClick = {
-                    viewModel.onReset()
-                }
+                onClick = onReset
             ) {
                 Text(text = "Reset", color = MaterialTheme.colorScheme.onPrimary)
             }
