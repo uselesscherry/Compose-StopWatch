@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import com.cherry.composestopwatch.presentation.StopWatchScreen
+import com.cherry.composestopwatch.presentation.model.TimeData
 import com.cherry.composestopwatch.ui.theme.ComposeStopWatchTheme
-
 
 class MainActivity : ComponentActivity() {
 
@@ -17,17 +17,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeStopWatchTheme {
 
-                val currentTime by remember {
-                    viewModel.currentTime
-                }
+                val time = viewModel.stopWatchTime.collectAsState(initial = TimeData.ZERO)
 
                 StopWatchScreen(
-                    currentTime = currentTime,
+                    time = time.value,
                     onStart = viewModel::onStart,
                     onStop = viewModel::onStop,
                     onReset = viewModel::onReset
                 )
-
             }
         }
     }
