@@ -14,6 +14,11 @@ showcase implementing DI and async programming with Coroutines. Also UI State su
 - DI
 - Coroutines
 
+##Count animation
+
+
+<img src="screenshots/timer-animation.gif"/>
+
 ### Adaptivity that depends on screen orientation:
 
 ``` kotlin
