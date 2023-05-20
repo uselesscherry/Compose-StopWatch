@@ -14,35 +14,27 @@ showcase implementing DI and async programming with Coroutines. Also UI State su
 - DI
 - Coroutines
 
-## Count animation
+## Count animation based on a [`tutorial`](https://youtu.be/07ZdBCyh7sc)
 
 <img src="screenshots/timer-animation.gif" height = "100" />
 
 
+### Half-rounded buttons 
 
-### Adaptivity that depends on screen orientation:
+<img src="screenshots/buttons.png" height = "100" align = "end" />
+
 
 ``` kotlin
-    val config = LocalConfiguration.current
-    val isPortrait by remember { mutableStateOf(config.orientation == Configuration.ORIENTATION_PORTRAIT) }
-
-                Box {
-                    Button(
-                        modifier = Modifier.align(
-                            if (isPortrait) Alignment.TopCenter
-                            else Alignment.CenterStart
-                        )
-                    ) { Text(text = "Start") }
-
-                    Button(
-                        modifier = Modifier.align(Alignment.Center)
-                    ) { Text(text = "Stop") }
-
-                    Button(
-                        modifier = Modifier.align(
-                            if (isPortrait) Alignment.BottomCenter
-                            else Alignment.CenterEnd
-                        )
-                    ) { Text(text = "Reset") }
-                }
+   
+   StopwatchButton(
+            modifier = Modifier
+                .clip(
+                    RoundedCornerShape(
+                        topStartPercent = 100,
+                        bottomStartPercent = 100
+                    )
+                ),
+            icon = Icons.Rounded.PlayArrow
+        )
+   
 ```
